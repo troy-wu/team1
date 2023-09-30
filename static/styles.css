@@ -63,3 +63,13 @@ body {
     bottom: 0;
     width: 100%;
 }
+
+h1 {
+  background: rgb(35,219,164);
+  background: linear-gradient(81deg, rgba(35,219,164,1) 0%, rgba(68,68,68,1) 62%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-size: 140px;
+    text-align: center;
+  }
