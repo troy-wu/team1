@@ -1,6 +1,21 @@
 import time
 import cv2,pandas
 from datetime import datetime
+from flask import Flask, render_template
+
+app = Flask(__name__, static_folder='static')
+
+# Your boolean data
+boolean_data = True  # Replace this with your boolean data
+
+@app.route('/')
+def index():
+    return render_template('index.html', boolean_data=boolean_data)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
 
 first_frame = None
 status_list = [None,None]
@@ -47,12 +62,8 @@ while True:
     if status_list[-1]==1 and status_list[-2]==0:
         time_stamp.append(datetime.now())
         print("Motion Detected")
-<<<<<<< HEAD
-        print(datetime.now())
-=======
         amount_of_movement+=1
         print(amount_of_movement)
->>>>>>> e3b5c8842acacf0d2f328f94798b3fad1d3cd5d5
     if status_list[-1]==0 and status_list[-2]==1:
         time_stamp.append(datetime.now())
         
