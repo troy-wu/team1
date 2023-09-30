@@ -86,3 +86,4 @@ for i in range(0, len(time_stamp),2):
 df.to_csv("All_Time_Stamp.csv")
 video.release()
 cv2.destroyAllWindows()
+
