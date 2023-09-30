@@ -39,6 +39,7 @@ while True:
     if status_list[-1]==1 and status_list[-2]==0:
         time_stamp.append(datetime.now())
         print("Motion Detected")
+        print(datetime.now())
     if status_list[-1]==0 and status_list[-2]==1:
         time_stamp.append(datetime.now())
         
