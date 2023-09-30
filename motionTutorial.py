@@ -1,3 +1,4 @@
+import time
 import cv2,pandas
 from datetime import datetime
 from flask import Flask, render_template
@@ -21,8 +22,18 @@ status_list = [None,None]
 time_stamp=[]
 df = pandas.DataFrame(columns=["Start", "End"])
 video = cv2.VideoCapture(0)
+motion_threshold = 12000
+
+amount_of_movement = 0
+delay_seconds = 3
+for i in range(delay_seconds, 0, -1):
+    print(f"{i} seconds remaining, Get In Position!")
+    time.sleep(1)  # Pause for 1 second
+print("Start")
 
 while True:
+
+    
     check,color_frame=video.read()
     status=0
     gray=cv2.cvtColor(color_frame,cv2.COLOR_BGR2GRAY)
@@ -33,14 +44,14 @@ while True:
         continue
     
     delta_frame=cv2.absdiff(first_frame, gray)
-    thresh_frame=cv2.threshold(delta_frame, 60, 255, cv2.THRESH_BINARY)[1]
+    thresh_frame=cv2.threshold(delta_frame, 150, 255, cv2.THRESH_BINARY)[1]
     
     
     thresh_frame=cv2.dilate(thresh_frame,None,iterations=3)
     (cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
     
     for contour in cnts:
-        if cv2.contourArea(contour)<10000:
+        if cv2.contourArea(contour) < motion_threshold:
             continue
         status=1
         (x,y,w,h)=cv2.boundingRect(contour)
@@ -50,6 +61,9 @@ while True:
     
     if status_list[-1]==1 and status_list[-2]==0:
         time_stamp.append(datetime.now())
+        print("Motion Detected")
+        amount_of_movement+=1
+        print(amount_of_movement)
     if status_list[-1]==0 and status_list[-2]==1:
         time_stamp.append(datetime.now())
         

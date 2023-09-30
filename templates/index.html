@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
 </head>
 <body>
     <div class="motivation">
         <h1>MindfulMe</h1>
+        <h1>Boolean Data: {{ boolean_data }}</h1>
     </div>
     <div id="footer" class="ocean">
         <div class="wave"></div>
