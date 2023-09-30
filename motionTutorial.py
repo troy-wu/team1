@@ -8,9 +8,9 @@ df = pandas.DataFrame(columns=["Start", "End"])
 video = cv2.VideoCapture(0)
 
 while True:
-    check,color_frame   =video.read()
+    check,color_frame=video.read()
     status=0
-    gray=cv2.cvtColor(color_frame,cv2.COLOR_BRG2GRAY)
+    gray=cv2.cvtColor(color_frame,cv2.COLOR_BGR2GRAY)
     gray=cv2.GaussianBlur(gray,(21,21),0)
 
     if first_frame is None:
