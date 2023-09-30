@@ -40,6 +40,9 @@ body {
   }
 }
 
+.wave { transition: all .2s ease-in-out; }
+.wave:hover { transform: scale(1.1); }
+
 @keyframes swell {
   0%, 100% {
     transform: translate3d(0,-25px,0);
@@ -47,4 +50,16 @@ body {
   50% {
     transform: translate3d(0,5px,0);
   }
+}
+
+.motivation {
+    font-size: 5vw;
+    align-items: center;
+    justify-content: center;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
