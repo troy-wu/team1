@@ -6,7 +6,6 @@ status_list = [None,None]
 time_stamp=[]
 df = pandas.DataFrame(columns=["Start", "End"])
 video = cv2.VideoCapture(0)
-motion_threshold = 10000
 
 while True:
     check,color_frame=video.read()
@@ -26,7 +25,7 @@ while True:
     (cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
     
     for contour in cnts:
-        if cv2.contourArea(contour)<motion_threshold:
+        if cv2.contourArea(contour)<10000:
             continue
         status=1
         (x,y,w,h)=cv2.boundingRect(contour)
@@ -34,11 +33,8 @@ while True:
     
     status_list.append(status)
     
-    
-    
     if status_list[-1]==1 and status_list[-2]==0:
         time_stamp.append(datetime.now())
-        print("Motion Detected")
     if status_list[-1]==0 and status_list[-2]==1:
         time_stamp.append(datetime.now())
         
