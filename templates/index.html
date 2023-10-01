@@ -5,13 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
 </head>
 </head>
 <body>
+   <div class="flex-container">
     <div class="motivation">
         <h1>MindfulMe</h1>
-        <h1>Boolean Data: {{ boolean_data }}</h1>
+        <!-- <h1>Boolean Data: {{ boolean_data }}</h1> -->
+        <h1 id="status"></h1>
+        <script>
+            const statusElement = document.getElementById('status');
+    
+            function updateStatus() {
+                fetch('/get_status')
+                    .then(response => response.json())
+                    .then(data => {
+                        const newStatus = data.status;
+                        statusElement.textContent = newStatus;
+                    });
+            }
+    
+            // Poll for status updates every 1 second (adjust as needed)
+            setInterval(updateStatus, 1000);
+        </script>
+    </div>
     </div>
     <div id="footer" class="ocean">
         <div class="wave"></div>

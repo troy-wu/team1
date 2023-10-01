@@ -1,19 +1,44 @@
 import time
 import cv2,pandas
 from datetime import datetime
-from flask import Flask, render_template
+# from flask import Flask, render_template, jsonify
 
-app = Flask(__name__, static_folder='static')
+# app = Flask(__name__, static_folder='static')
 
-# Your boolean data
-boolean_data = True  # Replace this with your boolean data
+# # Initialize the Python variable for motion status
+# boolean_data = False  # Assuming no motion initially
 
-@app.route('/')
-def index():
-    return render_template('index.html', boolean_data=boolean_data)
+# @app.route('/')
+# def index():
+#     return render_template('index.html', boolean_data=boolean_data)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# @app.route('/get_status')
+# def get_status():
+#     global boolean_data
+#     return jsonify({"status": boolean_data})
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+from flask import Flask, jsonify
+
+# Initialize the Python variable for motion status
+boolean_data = False  # Assuming no motion initially
+
+# Create a Flask app instance for status updates
+app = Flask(__name__)
+
+# Function to update the boolean_data variable based on motion status
+def update_boolean_data(status):
+    global boolean_data
+    if status == 1:
+        boolean_data = True  # Set to True when motion is detected
+    elif status == 0:
+        boolean_data = False  # Set to False when no motion is detected
+
+# Camera capture and motion detection code
+def camera_thread():
+    global status
 
 
 
@@ -64,8 +89,14 @@ while True:
         print("Motion Detected")
         amount_of_movement+=1
         print(amount_of_movement)
-    if status_list[-1]==0 and status_list[-2]==1:
+        # boolean_data = True
+    elif status_list[-1]==0 and status_list[-2]==1:
         time_stamp.append(datetime.now())
+        # boolean_data = False
+
+        # Update boolean_data based on motion status
+        update_boolean_data(status)
+
         
     cv2.imshow("Gray Frame", gray)
     cv2.imshow("Delta Frame", delta_frame)
