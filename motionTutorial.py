@@ -18,7 +18,7 @@ first_frame = None
 status_list = [None,None]
 time_stamp=[]
 df = pandas.DataFrame(columns=["Start", "End"])
-video = cv2.VideoCapture(0)
+video = cv2.VideoCapture(0)     
 motion_threshold = 12000
 
 amount_of_movement = 0
