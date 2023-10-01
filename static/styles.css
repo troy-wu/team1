@@ -2,7 +2,7 @@
 
 html, body { height: 100%; }
 body {
-  background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+  background:radial-gradient(ellipse at center, rgb(254, 252, 221) 0%, rgba(255,254,234,1) 50%, #94e4e8 100%);
   overflow: hidden;
   font-family: 'Chakra Petch', sans-serif;
 
@@ -85,6 +85,7 @@ body {
 .flex-container {
   z-index: 1000;
   position: absolute;
+  font-size: 1.5vw;
 }
 
 h1 {

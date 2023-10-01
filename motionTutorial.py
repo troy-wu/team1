@@ -13,7 +13,6 @@ def index():
     return render_template('index.html')
 
 
-
 first_frame = None
 status_list = [None,None]
 time_stamp=[]
