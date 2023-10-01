@@ -86,7 +86,7 @@ h1 {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     width: 100%;
-
+    font-style: italic;
     text-align: left;
     padding-left: 8vw;
 
@@ -106,4 +106,150 @@ h1 {
       
     }
 
-  
+
+   
+
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      flex-flow: row;
+      align-items: center;
+   }
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 20px;
+      color: #fff;
+   }
+    footer .copyright {
+      text-align: center;
+   }
+    footer a {
+      color: #1bb76e;
+      text-decoration: none;
+      transition: 0.25s;
+   }
+    footer a:hover {
+      color: #015871;
+   }
+    .menuToggle {
+      display: block;
+      position: relative;
+      top: 50px;
+      z-index: 1;
+      -webkit-user-select: none;
+      user-select: none;
+   }
+    .menuToggle a {
+      text-decoration: none;
+      color: #232323;
+      transition: all 0.3s ease;
+   }
+    .menuToggle a:hover {
+      color: #015871;
+   }
+    .menuToggle input {
+      display: block;
+      width: 40px;
+      height: 32px;
+      position: absolute;
+      top: -7px;
+      cursor: pointer;
+      opacity: 0;
+     /* hide this */
+      z-index: 2;
+     /* and place it over the hamburger */
+      -webkit-touch-callout: none;
+   }
+    .menuToggle span {
+      position: relative;
+      display: block;
+      width: 33px;
+      height: 4px;
+      margin-bottom: 5px;
+      position: relative;
+      background: #01242e;
+      border-radius: 3px;
+      z-index: 1;
+      transform-origin: 4px 0px;
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+   }
+    .menuToggle span:first-child {
+      transform-origin: 0% 0%;
+   }
+    .menuToggle span:nth-last-child(2) {
+      transform-origin: 0% 100%;
+   }
+    .menuToggle input:checked ~ span {
+      opacity: 1;
+      transform: rotate(45deg) translate(-2px, -1px);
+      background: #232323;
+   }
+    .menuToggle input:checked ~ span:nth-last-child(3) {
+      opacity: 0;
+      transform: rotate(0deg) scale(0.2, 0.2);
+   }
+    .menuToggle input:checked ~ span:nth-last-child(2) {
+      transform: rotate(-45deg) translate(0, -1px);
+   }
+    .menuToggle input:checked ~ .menuItem {
+      transform: none;
+   }
+    .menuItem {
+      position: absolute;
+      width: 300px;
+      padding: 50px;
+      padding-top: 125px;
+      /* background: rgba(255, 255, 255, 0.7); */
+      background-image: linear-gradient(to right, #B7E8EB , rgba(255,255,255,0));
+      list-style-type: none;
+      -webkit-font-smoothing: antialiased;
+      transform-origin: 0% 0%;
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+   }
+    .menuItem li {
+      padding: 10px 0;
+      font-size: 22px;
+   }
+    .menu--left {
+      position: relative;
+      width: 50%;
+   }
+    .menu--left .menuToggle {
+      left: 0;
+   }
+    .menu--left .menuToggle input {
+      left: 50px;
+   }
+    .menu--left .menuToggle span {
+      left: 50px;
+   }
+    .menu--left .menuItem {
+      left: 50px;
+      margin: -100px 0 0 -50px;
+      transform: translate(-100%, 0);
+   }
+    
+    @keyframes text-slide-in {
+      0% {
+        -webkit-transform: translateX(100px);
+        -moz-transform: translateX(100px);
+        -ms-transform: translateX(100px);
+        -o-transform: translateX(100px);
+        transform: translateX(100px);
+     }
+      100% {
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0);
+     }
+   }
+    
+  a {
+    font-style: italic;
+  }
