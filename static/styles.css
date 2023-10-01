@@ -82,7 +82,7 @@ body {
 }
 
 h1 {
-  background: black;
+  background: #01242e;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     width: 100%;
