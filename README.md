@@ -1,4 +1,4 @@
-# MindfulMotion - Your Personalized Workout Companion
+# MindfulMotion - Your Personalized Wellness Companion
 ## HelloHacks 2023 
 ### Team 1: Troy Wu, Christopher Chen, Jasper Mao, Eric Wen
 
