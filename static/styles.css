@@ -4,7 +4,24 @@ html, body { height: 100%; }
 body {
   background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
   overflow: hidden;
+  font-family: 'Chakra Petch', sans-serif;
+
 }
+
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
 
 .ocean { 
   height: 5%;
@@ -12,7 +29,7 @@ body {
   position:absolute;
   bottom:0;
   left:0;
-  background: #EDB458;
+  background: #015871;
 }
 
 .wave {
@@ -65,11 +82,28 @@ body {
 }
 
 h1 {
-  background: rgb(35,219,164);
-  background: linear-gradient(81deg, rgba(35,219,164,1) 0%, rgba(68,68,68,1) 62%);
+  background: black;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     width: 100%;
-    font-size: 140px;
-    text-align: center;
+
+    text-align: left;
+    padding-left: 8vw;
+
   }
+ 
+  #lookgood {
+    transition: 700ms ease;
+    font-size: 5vw;
+    font-style: italic;
+
+  }
+
+  #lookgood:hover {
+      font-variation-settings: "wght" 582; 
+      letter-spacing: 5px;
+      font-style: italic;
+      
+    }
+
+  

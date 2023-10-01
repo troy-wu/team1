@@ -66,10 +66,12 @@ def motion_detection_function():
             amount_of_movement+=1
             print(amount_of_movement)
             socketio.emit('motion_update', {'motion_detected': True})
+            socketio.emit('count_update', amount_of_movement)
 
         elif status_list[-1]==0 and status_list[-2]==1:
             time_stamp.append(datetime.now())
             socketio.emit('motion_update', {'motion_detected': False})
+            socketio.emit('count_update', amount_of_movement)
 
 
             
@@ -115,3 +117,8 @@ df.to_csv("All_Time_Stamp.csv")
 video.release()
 cv2.destroyAllWindows()
 
+#03C6FC
+  #0294BD
+ # 015871
+  #01627D
+  #014457 
