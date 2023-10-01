@@ -1,44 +1,16 @@
 import time
 import cv2,pandas
+import threading
 from datetime import datetime
-# from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit
 
-# app = Flask(__name__, static_folder='static')
-
-# # Initialize the Python variable for motion status
-# boolean_data = False  # Assuming no motion initially
-
-# @app.route('/')
-# def index():
-#     return render_template('index.html', boolean_data=boolean_data)
-
-# @app.route('/get_status')
-# def get_status():
-#     global boolean_data
-#     return jsonify({"status": boolean_data})
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-from flask import Flask, jsonify
-
-# Initialize the Python variable for motion status
-boolean_data = False  # Assuming no motion initially
-
-# Create a Flask app instance for status updates
 app = Flask(__name__)
+socketio = SocketIO(app)
 
-# Function to update the boolean_data variable based on motion status
-def update_boolean_data(status):
-    global boolean_data
-    if status == 1:
-        boolean_data = True  # Set to True when motion is detected
-    elif status == 0:
-        boolean_data = False  # Set to False when no motion is detected
-
-# Camera capture and motion detection code
-def camera_thread():
-    global status
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 
@@ -51,64 +23,89 @@ motion_threshold = 12000
 
 amount_of_movement = 0
 delay_seconds = 3
-for i in range(delay_seconds, 0, -1):
-    print(f"{i} seconds remaining, Get In Position!")
-    time.sleep(1)  # Pause for 1 second
-print("Start")
 
-while True:
+def motion_detection_function():
+    global first_frame, status_list, time_stamp, df, video, motion_threshold, amount_of_movement, delay_seconds
 
-    
-    check,color_frame=video.read()
-    status=0
-    gray=cv2.cvtColor(color_frame,cv2.COLOR_BGR2GRAY)
-    gray=cv2.GaussianBlur(gray,(21,21),0)
+    for i in range(delay_seconds, 0, -1):
+        print(f"{i} seconds remaining, Get In Position!")
+        time.sleep(1)  # Pause for 1 second
+    print("Start")
 
-    if first_frame is None:
-        first_frame = gray
-        continue
-    
-    delta_frame=cv2.absdiff(first_frame, gray)
-    thresh_frame=cv2.threshold(delta_frame, 150, 255, cv2.THRESH_BINARY)[1]
-    
-    
-    thresh_frame=cv2.dilate(thresh_frame,None,iterations=3)
-    (cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-    
-    for contour in cnts:
-        if cv2.contourArea(contour) < motion_threshold:
-            continue
-        status=1
-        (x,y,w,h)=cv2.boundingRect(contour)
-        cv2.rectangle(color_frame,(x,y),(x+w,y+h),(0,0,255),2)
-    
-    status_list.append(status)
-    
-    if status_list[-1]==1 and status_list[-2]==0:
-        time_stamp.append(datetime.now())
-        print("Motion Detected")
-        amount_of_movement+=1
-        print(amount_of_movement)
-        # boolean_data = True
-    elif status_list[-1]==0 and status_list[-2]==1:
-        time_stamp.append(datetime.now())
-        # boolean_data = False
-
-        # Update boolean_data based on motion status
-        update_boolean_data(status)
+    while True:
 
         
-    cv2.imshow("Gray Frame", gray)
-    cv2.imshow("Delta Frame", delta_frame)
-    cv2.imshow("Threshold Frame", thresh_frame)
-    cv2.imshow("Colour Frame", color_frame)
-    
-    key=cv2.waitKey(1)
-    if key==ord('q'):
-        if status==1:
+        check,color_frame=video.read()
+        status=0
+        gray=cv2.cvtColor(color_frame,cv2.COLOR_BGR2GRAY)
+        gray=cv2.GaussianBlur(gray,(21,21),0)
+
+        if first_frame is None:
+            first_frame = gray
+            continue
+        
+        delta_frame=cv2.absdiff(first_frame, gray)
+        thresh_frame=cv2.threshold(delta_frame, 150, 255, cv2.THRESH_BINARY)[1]
+        
+        
+        thresh_frame=cv2.dilate(thresh_frame,None,iterations=3)
+        (cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        
+        for contour in cnts:
+            if cv2.contourArea(contour) < motion_threshold:
+                continue
+            status=1
+            (x,y,w,h)=cv2.boundingRect(contour)
+            cv2.rectangle(color_frame,(x,y),(x+w,y+h),(0,0,255),2)
+        
+        status_list.append(status)
+        
+        if status_list[-1]==1 and status_list[-2]==0:
             time_stamp.append(datetime.now())
-        break
-    
+            print("Motion Detected")
+            amount_of_movement+=1
+            print(amount_of_movement)
+            socketio.emit('motion_update', {'motion_detected': True})
+
+        elif status_list[-1]==0 and status_list[-2]==1:
+            time_stamp.append(datetime.now())
+            socketio.emit('motion_update', {'motion_detected': False})
+
+
+            
+        # cv2.imshow("Gray Frame", gray)
+        # cv2.imshow("Delta Frame", delta_frame)
+        # cv2.imshow("Threshold Frame", thresh_frame)
+        # cv2.imshow("Colour Frame", color_frame)
+        
+        key=cv2.waitKey(1)
+        if key==ord('q'):
+            if status==1:
+                time_stamp.append(datetime.now())
+            break
+
+def display_frames(gray, delta_frame,thresh_frame,color_frame,status):
+    while True:
+        # cv2.imshow("Gray Frame", gray)
+        # cv2.imshow("Delta Frame", delta_frame)
+        # cv2.imshow("Threshold Frame", thresh_frame)
+        # cv2.imshow("Colour Frame", color_frame)
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            if status == 1:
+                time_stamp.append(datetime.now())
+            break
+        
+
+if __name__ == '__main__':
+    # Create a thread for the motion detection function
+    motion_thread = threading.Thread(target=motion_detection_function)
+
+    # Start the motion detection thread
+    motion_thread.start()
+
+    # Run the Flask app on the main thread
+    socketio.run(app, debug=True)
 
 print(status_list)
 for i in range(0, len(time_stamp),2):

@@ -6,29 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
 </head>
 </head>
 <body>
+    <h1>Motion Detection Status: <span id="motionStatus">false</span></h1>
+
+    <script>
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('motion_update', function(data) {
+            const motionStatusElement = document.getElementById('motionStatus');
+            motionStatusElement.textContent = data.motion_detected ? 'on' : 'off';
+        });
+    </script>
    <div class="flex-container">
     <div class="motivation">
         <h1>MindfulMe</h1>
-        <!-- <h1>Boolean Data: {{ boolean_data }}</h1> -->
-        <h1 id="status"></h1>
-        <script>
-            const statusElement = document.getElementById('status');
-    
-            function updateStatus() {
-                fetch('/get_status')
-                    .then(response => response.json())
-                    .then(data => {
-                        const newStatus = data.status;
-                        statusElement.textContent = newStatus;
-                    });
-            }
-    
-            // Poll for status updates every 1 second (adjust as needed)
-            setInterval(updateStatus, 1000);
-        </script>
     </div>
     </div>
     <div id="footer" class="ocean">
