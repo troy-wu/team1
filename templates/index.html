@@ -8,11 +8,15 @@
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,700&display=swap');
+        </style>
+        
 </head>
 </head>
 </head>
 <body>
-    <h1>Motion Detection Status: <span id="motionStatus">false</span></h1>
+    
 
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -21,11 +25,18 @@
             const motionStatusElement = document.getElementById('motionStatus');
             motionStatusElement.textContent = data.motion_detected ? 'on' : 'off';
         });
+
+        socket.on('count_update', function(data) {
+            const countElement = document.getElementById('count');
+            countElement.textContent = data;
+        });
     </script>
    <div class="flex-container">
-    <div class="motivation">
-        <h1>MindfulMe</h1>
+    <div id="lookgood" class="motivation">
+        <h1>MindfulMotion</h1>
     </div>
+    <h1>Motion Detection Status: <span id="motionStatus">false</span></h1>
+    <h1>Rep count: <span id="count">0</span></h1>
     </div>
     <div id="footer" class="ocean">
         <div class="wave"></div>
