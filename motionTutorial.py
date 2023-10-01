@@ -21,7 +21,7 @@ first_frame = None
 status_list = [None,None]
 time_stamp=[]
 df = pandas.DataFrame(columns=["Start", "End"])
-video = cv2.VideoCapture(0)
+video = cv2.VideoCapture(0)     
 motion_threshold = 12000
 
 amount_of_movement = 0
@@ -38,6 +38,10 @@ while True:
     status=0
     gray=cv2.cvtColor(color_frame,cv2.COLOR_BGR2GRAY)
     gray=cv2.GaussianBlur(gray,(21,21),0)
+    
+    if not check:
+        print("Can't receive frame (stream end?). Exiting ...")
+        break
 
     if first_frame is None:
         first_frame = gray
@@ -63,7 +67,7 @@ while True:
         time_stamp.append(datetime.now())
         print("Motion Detected")
         amount_of_movement+=1
-        print(amount_of_movement)
+        print(amount_of_movement) 
     if status_list[-1]==0 and status_list[-2]==1:
         time_stamp.append(datetime.now())
         
