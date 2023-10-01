@@ -20,7 +20,4 @@ MindfulMotion is your all-in-one companion for physical fitness, yoga, and mindf
 
 
 
-## Our Journey
-
-
 
