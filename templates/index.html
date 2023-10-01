@@ -13,8 +13,6 @@
         </style>
         
 </head>
-</head>
-</head>
 <body>
     <header>
         <nav class="menu--left" role="navigation">
@@ -36,24 +34,37 @@
     
 
     <script>
+        var stat = false;
         const socket = io.connect('http://' + document.domain + ':' + location.port);
 
         socket.on('motion_update', function(data) {
             const motionStatusElement = document.getElementById('motionStatus');
-            motionStatusElement.textContent = data.motion_detected ? 'on' : 'off';
+            motionStatusElement.textContent = data;
         });
 
         socket.on('count_update', function(data) {
+           
             const countElement = document.getElementById('count');
+            if (stat==true) {
+                data = 0;
+            }
             countElement.textContent = data;
+            document.getElementById("footer").style.height = 4 * data + 'vw';
+            stat=false;
         });
+
+        function reset() {
+            stat=true;
+        }
     </script>
-   <div class="flex-container">
+   
     <div id="lookgood" class="motivation">
-        <h1>MindfulMotion</h1>
+        <h1>Mindful Motion</h1>
     </div>
-    <h1>Motion Detection Status: <span id="motionStatus">false</span></h1>
-    <h1>Rep count: <span id="count">0</span></h1>
+    <div class="flex-container">
+        <h1><span id="motionStatus">Begin Rep</span></h1>
+        <h1>Rep count: <span id="count">0</span></h1>
+        <button onclick="reset()"><h1>Reset</h1></button>
     </div>
     <div id="footer" class="ocean">
         <div class="wave"></div>
