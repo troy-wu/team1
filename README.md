@@ -26,6 +26,10 @@ MindfulMotion is your all-in-one companion for physical fitness, yoga, and mindf
 
 **Pandas:** This project utilizes the Pandas library for keeping track of motion events by recording timestamps.
 
+**Flask and Flask-SocketIO**: Flask and Flask-SocketIO collectively allow the project to create a web-based user interface in python that provides real-time updates to the user, such as notifications about motion detection events and the current motion event count.
+
+HTML/CSS: This project uses HTML/css to create a user friendly web interface to display movement data and an interactive wave which moves when a rep is complete.
+
 
 
 
