@@ -1,5 +1,5 @@
-# MindfulMotion - Your Personalized Wellness Companion
-## HelloHacks 2023 
+# MindfulMotion - Your Personalized Wellness Companion 
+## HelloHacks 2023 Winner
 ### Team 1: Troy Wu, Christopher Chen, Jasper Mao, Eric Wen
 
 ## The Problem 
@@ -17,6 +17,16 @@ Achieve yoga mastery with MindfulMotion's real-time pose detection. It analyzes 
 Embark on your mindfulness journey with MindfulMotion's guided meditations. Our app uses motion detection to gently remind you if your posture or focus wavers during meditation sessions. Stay centered and aligned as you experience the benefits of guided mindfulness practices.
 
 MindfulMotion is your all-in-one companion for physical fitness, yoga, and mindfulness, ensuring every aspect of your wellness journey is supported with precision and care.
+
+## Tech Stack
+
+**Python:** The project is developed using the Python programming language, serving as the foundation for implementing various functionalities, including video capture, motion detection, and data manipulation.
+
+**OpenCV:** This project utilizes OpenCV for video capture, motion detection, video frame processing. To detect movement, we compare frames based on rounded pixel values determined by a certain threshold
+
+**Pandas:** This project utilizes the Pandas library for keeping track of motion events by recording timestamps.
+
+
 
 
 
