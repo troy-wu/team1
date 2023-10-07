@@ -22,7 +22,7 @@ MindfulMotion is your all-in-one companion for physical fitness, yoga, and mindf
 
 **Python:** The project is developed using the Python programming language, serving as the foundation for implementing various functionalities, including video capture, motion detection, and data manipulation.
 
-**OpenCV:** This project utilizes OpenCV for video capture, motion detection, video frame processing. To detect movement, we compare frames based on rounded pixel values determined by a certain threshold
+**OpenCV:** This project utilizes OpenCV for video capture, motion detection, video frame processing. To detect movement and track objects, we calculate the phase difference between a base frame and a delta frame. We do this by applying image processing techniques such as contouring, dilation, and shadow removal to a threshold frame. 
 
 **Pandas:** This project utilizes the Pandas library for keeping track of motion events by recording timestamps.
 
